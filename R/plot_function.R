@@ -56,7 +56,7 @@ plot.knox <- function(knox_object, pvalue_range = c(0, .05), text = "knox_ratio"
 
   ggplot.df$Var1 <- factor(ggplot.df$Var1, levels = rev(levels(ggplot.df$Var1)))
 
-  myplot <- ggplot(data = data.frame(ggplot.df), aes(x=Var2, y=Var1, fill=pvalues)) +
+  myplot <- ggplot(data = ggplot.df, aes(x=Var2, y=Var1, fill=pvalues)) +
                    geom_tile(colour = "black") +
                    scale_fill_gradient2(low = "darkred", high = "khaki1", mid = "orangered",
                                         limit = pvalue_range, na.value = "white",
