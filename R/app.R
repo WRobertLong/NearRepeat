@@ -25,7 +25,8 @@ ui <- fluidPage(
   titlePanel("Near Repeat Dashboard"),
   
   sidebarPanel(
-    fileInput("file", label = "Choose a file to load (.rda)", accept = ".rda"),
+    # allow rda and csv files, and disallow multiple files.
+    fileInput("file", label = "Choose a file to load (.rda)", accept = c(".rda", ".csv")),
     textInput('vec1', 'Enter a vector for spatial cut points (comma delimited)', "0,1,2"),
     
     # display range of spatial distance pairs
@@ -49,14 +50,23 @@ ui <- fluidPage(
 
 server <- shinyServer(function(input, output) {
   
-  # fetch the data
+  # fetch the data, ising reactive() so that it can be called 
+  # multiple times but only reloads the file when the user
+  # has uploaded a new file
   data <- reactive({
     req(input$file)
     file <- input$file$datapath
-    load(file, envir = .GlobalEnv)
-    dt1 <- get(substr(input$file$name, 1, nchar(input$file$name)-4))
+    fext <- substr(input$file$name, nchar(input$file$name) - 2, nchar(input$file$name))
+    if (fext == "rda") {
+      load(file, envir = .GlobalEnv) 
+      dt1 <- get(substr(input$file$name, 1, nchar(input$file$name)-4))
+    } else if ( fext == "csv") {
+      dt1 <- read.csv(input$file$datapath, stringsAsFactors = FALSE)
+      dt1$date <- as.Date(dt1$date)
+      
+    }
     dt1 <- dt1[sample(nrow(dt1), 300),]  # for testing only
-    
+    dt1
   })
 
   
@@ -70,7 +80,7 @@ server <- shinyServer(function(input, output) {
   
   # compute range for temporal data pairs 
   output$tempcut <- renderTable({
-    mydf <- data()
+     mydf <- data()
     t_dist <- dist(mydf$date)
     paste(round(min(t_dist),0), " , ", round(max(t_dist),0))
   })
