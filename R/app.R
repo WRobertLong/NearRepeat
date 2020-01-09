@@ -2,18 +2,14 @@
 #
 #  Robert Long 2 Dec 2019
 #
-#  Requires user input to select an rda file
-#  which must contain a data frame with the 
-#  same name as the file
-#  eg mydata.rda should contain a dataframe
-#  called mydata and this dataframe should
-#  contain X, Y, and time variables
-#
-#  The ranges of sptial pairs and temporal 
-#  distance pairs are displayed after loading
+#  Requires user input to select EITHER a rda file which must contain a data frame 
+#  with the same name as the fileg mydata.rda should contain a dataframe called 
+#  mydata and this dataframe should contain X, Y, and time variables,
+#  OR a csv file which should contain X, Y and time variables.
+
+#  The ranges of sptial pairs and temporaldistance pairs are displayed after loading
 #  
-#  user also inputs vectors for spatial and 
-#  temporal cut points
+#  The user also inputs 2 vectors one for spatial and one for temporal cut points.
 #
 
 
