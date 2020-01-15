@@ -11,23 +11,20 @@ void print_data(size_t m, size_t n, int array[][m]) {
 
 int main() { 
 
-    int n = 10, c = 2, i, j, m, dd_len ;
+    int n = 20, c = 2, i, j, m, dd_len ;
     float *dd ;
-	
 	int data[n][c] ;
 	
 	for ( i = 0; i < n ; i++) {
-	
 	  data[i][0] = i + 1 ; 
 	  data[i][1] = i + 1 ; 
-	
 	}
 	
 	print_data(n, c, data) ;
 		
 	dd_len = n * (n - 1) / 2 ;
 	dd = malloc( dd_len * sizeof(float)) ;
-	
+		
 	j = 0 ;
 	
 	for ( i = 0; i < (n - 1); i++ ) {
@@ -44,6 +41,8 @@ int main() {
 	//print the distance matrix as a vector
 	for ( i = 0; i < j ; i++)
 		printf("%f ", dd[i]); 
-		
+	
+	free(dd) ;
+	
    return 0; 
 } 

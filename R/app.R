@@ -14,9 +14,12 @@
 
 
 library(shiny)
+library(shinythemes)
 
 
 ui <- fluidPage(
+  
+  theme = shinytheme("cyborg"),
   
   titlePanel("Near Repeat Dashboard"),
   
